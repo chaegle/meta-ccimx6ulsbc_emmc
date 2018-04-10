@@ -1,0 +1,125 @@
+OpenEmbedded/Yocto ConnectCore 6UL SBC Pro eMMC Enablement Meta Layer 
+
+Author: Cameron Haegle
+E-mail: chaegle@gmail.com OR cameronh@digi.com
+
+This layer was created as a result of an exercise in enabling the 4GB eMMC that is 
+on the ConnectCore 6UL SBC Pro. The interface (uSDHC2) used by this memory device 
+is shared with the on-SBC microSD card. These two device CANNOT be use simultaniously.
+Additional documentation on this subject can be found in Digi's online Getting Started 
+Guide.
+
+This layer is provided as-is with no support, implied or intended, by Digi International.
+
+Supported Platforms:
+- Digi ConnectCore 6UL SBC Pro (CC-SBP-WMX-JN59 & CC-WMX6UL-KIT)
+
+Installation
+------------
+
+1. Install Digi Embedded Yocto distribution.
+    
+   https://github.com/digi-embedded/dey-manifest#installing-digi-embedded-yocto
+
+2. Clone meta-ccimx6ulsbc_emmc
+
+   #> cd <DEY_INSTALLDIR>/sources
+   #> git clone https://github.com/chaegle/meta-ccimx6ulsbc_emmc -b morty
+
+Create and build a project
+--------------------------
+
+1. Create a project for the ConnectCore 6UL SBC Pro
+
+   #> mkdir <project-dir>
+   #> cd <project-dir>
+   #> . <DEY_INSTALLDIR/mkproject.sh -p ccimx6ulsbc
+
+2. Add meta-ccimx6ulsbc_emmc layer to the project's bblayers.conf file, appending the layer's
+path to the BBLAYERS variable.
+
+   #> vi <project-dir>/conf/bblayers.conf
+
+   Example:  
+
+   BBLAYERS ?= " \
+  /usr/local/dey-2.2-r3.3/sources/poky/meta \
+  /usr/local/dey-2.2-r3.3/sources/poky/meta-poky \
+  /usr/local/dey-2.2-r3.3/sources/poky/meta-yocto-bsp \
+  /usr/local/dey-2.2/sources/meta-openembedded/meta-oe \
+  /usr/local/dey-2.2/sources/meta-openembedded/meta-python \
+  /usr/local/dey-2.2/sources/meta-openembedded/meta-networking \
+  /usr/local/dey-2.2/sources/meta-openembedded/meta-webserver \
+  /usr/local/dey-2.2/sources/meta-qt5 \
+  /usr/local/dey-2.2/sources/meta-swupdate \
+  /usr/local/dey-2.2/sources/meta-freescale \
+  /usr/local/dey-2.2/sources/meta-fsl-demos \
+  /usr/local/dey-2.2/sources/meta-digi/meta-digi-arm \
+  /usr/local/dey-2.2/sources/meta-digi/meta-digi-dey \
+  /usr/local/dey-2.2/sources/meta-ccimx6ulsbc_emmc \
+  "
+
+3. Configure the project (optional), to enable 8-bit communication to the eMMC (the default
+is 4-bit).
+ 
+  #> vi <project-dir>/conf/local.conf
+
+  Add the below line:
+
+  CCIMX6UL_8BIT_EMMC_ENABLED = "1"
+
+4. Build the images.
+
+  #> bitbake dey-image-qt
+ 
+  OR
+
+  #> bitbake dey-image-aws
+
+5. Depending on the use case, it may also be desirable to add efs2progs to the root filesystem.
+
+   #> vi <project-dir>/conf/local.conf
+
+   Adding the below line:
+
+   IMAGE_INSTALL_append = " e2fsprogs"
+
+
+Tested Use Cases
+----------------
+
+Two use cases were considered during this documented exercise.
+
+1. Increasing storage.
+2. Booting Linux from eMMC.
+
+Extending the Default File System
+---------------------------------
+
+1. Update the SBC's flash.
+
+  
+
+Booting Linux from eMMC
+-----------------------
+
+It is important to note that, due to the CC6UL's design, it is NOT possible to boot from
+media other than the on-SOM NAND or microUSB (serial boot loader). This is to say that the
+U-boot bootloader cannot be executed from media, other than those listed above. 
+
+One can, however, load the Linux kernel and mount the root filesystem from eMMC.
+
+1. Edit the project's local.conf file.
+
+   #> vi <project-dir>/conf/local.conf
+
+   Adding the below line:
+
+   # enable eMMC (4-bit) in U-boot
+   CCIMX6UL_UBOOT_EMMC_ENABLED = "1"
+
+2. Build the desired image.
+
+3. Deploy the image.
+
+

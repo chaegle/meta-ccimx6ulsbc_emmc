@@ -1,0 +1,95 @@
+From 92ffb385d261a541e5a72fce7fe8e26609d82edb Mon Sep 17 00:00:00 2001
+From: Cameron Haegle <cameronh@digi.com>
+Date: Tue, 10 Apr 2018 11:52:57 -0500
+Subject: [PATCH 1/2] ARM dts ccimx6ulsbc enable 4GB eMMC (4-bit)
+
+---
+ arch/arm/boot/dts/imx6ul-ccimx6ulsbc-id135.dts | 22 +++++++++++-----------
+ arch/arm/boot/dts/imx6ul-ccimx6ulsbc.dts       | 22 +++++++++++-----------
+ 2 files changed, 22 insertions(+), 22 deletions(-)
+
+diff --git a/arch/arm/boot/dts/imx6ul-ccimx6ulsbc-id135.dts b/arch/arm/boot/dts/imx6ul-ccimx6ulsbc-id135.dts
+index 37c2d41..009dd9f 100644
+--- a/arch/arm/boot/dts/imx6ul-ccimx6ulsbc-id135.dts
++++ b/arch/arm/boot/dts/imx6ul-ccimx6ulsbc-id135.dts
+@@ -242,25 +242,25 @@
+ };
+ 
+ /* USDHC2 (microSD, conflicts with eMMC) */
+-&usdhc2 {
+-	pinctrl-assert-gpios = <&gpio5 1 GPIO_ACTIVE_LOW>;
+-	broken-cd;	/* no carrier detect line (use polling) */
+-	status = "okay";
+-};
++//&usdhc2 {
++//	pinctrl-assert-gpios = <&gpio5 1 GPIO_ACTIVE_LOW>;
++//	broken-cd;	/* no carrier detect line (use polling) */
++//	status = "okay";
++//};
+ 
+ /* USDHC2 (eMMC, conflicts with microSD) */
+-//&usdhc2 {
+-//	pinctrl-assert-gpios = <&gpio5 1 GPIO_ACTIVE_HIGH>;
+-//	non-removable;
++&usdhc2 {
++	pinctrl-assert-gpios = <&gpio5 1 GPIO_ACTIVE_HIGH>;
++	non-removable;
+ //	/*
+ //	 * Comment these two lines for 4-bit data bus or leave uncommented
+ //	 * for 8-bit data bus
+ //	 */
+ //	pinctrl-0 = <&pinctrl_usdhc2_8databits>;
+ //	bus-width = <8>;
+-//
+-//	status = "okay";
+-//};
++
++	status = "okay";
++};
+ 
+ /* Pin mux configuration */
+ &iomuxc {
+diff --git a/arch/arm/boot/dts/imx6ul-ccimx6ulsbc.dts b/arch/arm/boot/dts/imx6ul-ccimx6ulsbc.dts
+index 2fafe30..b6ee7ed 100644
+--- a/arch/arm/boot/dts/imx6ul-ccimx6ulsbc.dts
++++ b/arch/arm/boot/dts/imx6ul-ccimx6ulsbc.dts
+@@ -243,25 +243,25 @@
+ };
+ 
+ /* USDHC2 (microSD, conflicts with eMMC) */
+-&usdhc2 {
+-	pinctrl-assert-gpios = <&gpio5 1 GPIO_ACTIVE_LOW>;
+-	broken-cd;	/* no carrier detect line (use polling) */
+-	status = "okay";
+-};
++//&usdhc2 {
++//	pinctrl-assert-gpios = <&gpio5 1 GPIO_ACTIVE_LOW>;
++//	broken-cd;	/* no carrier detect line (use polling) */
++//	status = "okay";
++//};
+ 
+ /* USDHC2 (eMMC, conflicts with microSD) */
+-//&usdhc2 {
+-//	pinctrl-assert-gpios = <&gpio5 1 GPIO_ACTIVE_HIGH>;
+-//	non-removable;
++&usdhc2 {
++	pinctrl-assert-gpios = <&gpio5 1 GPIO_ACTIVE_HIGH>;
++	non-removable;
+ //	/*
+ //	 * Comment these two lines for 4-bit data bus or leave uncommented
+ //	 * for 8-bit data bus
+ //	 */
+ //	pinctrl-0 = <&pinctrl_usdhc2_8databits>;
+ //	bus-width = <8>;
+-//
+-//	status = "okay";
+-//};
++
++	status = "okay";
++};
+ 
+ /* Pin mux configuration */
+ &iomuxc {
+-- 
+2.7.4
+
