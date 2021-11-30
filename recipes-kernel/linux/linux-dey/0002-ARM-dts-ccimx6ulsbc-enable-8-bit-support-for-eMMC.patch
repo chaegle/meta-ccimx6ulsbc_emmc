@@ -1,0 +1,56 @@
+From 28851861adceea832ef62c4a1ba1190f349f4057 Mon Sep 17 00:00:00 2001
+From: Cameron Haegle <cameronh@digi.com>
+Date: Mon, 29 Nov 2021 21:21:23 -0600
+Subject: [PATCH] ARM dts ccimx6ulsbc enable 8-bit support for eMMC
+
+---
+ arch/arm/boot/dts/imx6ul-ccimx6ulsbc-wb.dts | 12 ++++++------
+ arch/arm/boot/dts/imx6ul-ccimx6ulsbc.dts    | 12 ++++++------
+ 2 files changed, 12 insertions(+), 12 deletions(-)
+
+diff --git a/arch/arm/boot/dts/imx6ul-ccimx6ulsbc-wb.dts b/arch/arm/boot/dts/imx6ul-ccimx6ulsbc-wb.dts
+index 11f0db836898..e225e5f64417 100644
+--- a/arch/arm/boot/dts/imx6ul-ccimx6ulsbc-wb.dts
++++ b/arch/arm/boot/dts/imx6ul-ccimx6ulsbc-wb.dts
+@@ -263,12 +263,12 @@
+ &usdhc2 {
+ 	pinctrl-assert-gpios = <&gpio5 1 GPIO_ACTIVE_HIGH>;
+ 	non-removable;
+-//	/*
+-//	 * Comment these two lines for 4-bit data bus or leave uncommented
+-//	 * for 8-bit data bus
+-//	 */
+-//	pinctrl-0 = <&pinctrl_usdhc2_8databits>;
+-//	bus-width = <8>;
++	/*
++	 * Comment these two lines for 4-bit data bus or leave uncommented
++	 * for 8-bit data bus
++	 */
++	pinctrl-0 = <&pinctrl_usdhc2_8databits>;
++	bus-width = <8>;
+ 
+ 	status = "okay";
+ };
+diff --git a/arch/arm/boot/dts/imx6ul-ccimx6ulsbc.dts b/arch/arm/boot/dts/imx6ul-ccimx6ulsbc.dts
+index 989f210f49ee..ca57a0a8493d 100644
+--- a/arch/arm/boot/dts/imx6ul-ccimx6ulsbc.dts
++++ b/arch/arm/boot/dts/imx6ul-ccimx6ulsbc.dts
+@@ -263,12 +263,12 @@
+ &usdhc2 {
+ 	pinctrl-assert-gpios = <&gpio5 1 GPIO_ACTIVE_HIGH>;
+ 	non-removable;
+-//	/*
+-//	 * Comment these two lines for 4-bit data bus or leave uncommented
+-//	 * for 8-bit data bus
+-//	 */
+-//	pinctrl-0 = <&pinctrl_usdhc2_8databits>;
+-//	bus-width = <8>;
++	/*
++	 * Comment these two lines for 4-bit data bus or leave uncommented
++	 * for 8-bit data bus
++	 */
++	pinctrl-0 = <&pinctrl_usdhc2_8databits>;
++	bus-width = <8>;
+ 
+ 	status = "okay";
+ };

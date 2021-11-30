@@ -1,0 +1,24 @@
+From de6d9abe4d4b883fef78d68e7a28f8c6477be44e Mon Sep 17 00:00:00 2001
+From: Cameron Haegle <cameronh@digi.com>
+Date: Mon, 29 Nov 2021 19:28:38 -0600
+Subject: [PATCH] ARM u-boot ccimx6ulsbc enable on-SBC 4GB eMMC
+
+---
+ board/digi/ccimx6ulsbc/ccimx6ulsbc.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/board/digi/ccimx6ulsbc/ccimx6ulsbc.c b/board/digi/ccimx6ulsbc/ccimx6ulsbc.c
+index a795498a8e..b2fb064fb6 100644
+--- a/board/digi/ccimx6ulsbc/ccimx6ulsbc.c
++++ b/board/digi/ccimx6ulsbc/ccimx6ulsbc.c
+@@ -200,6 +200,10 @@ int board_mmc_init(bd_t *bis)
+ {
+ 	int i, ret;
+ 
++        // Enable 4-bit eMMC
++        gpio_request(IMX_GPIO_NR(5,1), "SDIO Select");
++        gpio_direction_output(IMX_GPIO_NR(5,1), 1);
++
+ 	/*
+ 	 * According to the board_mmc_init() the following map is done:
+ 	 * (U-boot device node)    (Physical Port)
